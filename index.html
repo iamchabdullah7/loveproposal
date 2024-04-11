@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heart Animation</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #181717;
+    flex-direction: column;
+  }
+
+  .heart-container {
+    display: none;
+    position: relative;
+    margin-bottom: 30px;
+    animation: pulseHeart 1s infinite alternate;
+  }
+
+  .heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 90px;
+  }
+
+  .heart::before,
+  .heart::after {
+    position: absolute;
+    content: "";
+    left: 50px; /* Might trigger warning for unused property (depending on settings) */
+    top: 0;
+    width: 50px;
+    height: 80px;
+    background-color: #fc2e5a;
+    border-radius: 50px 50px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+    box-shadow: 0 0 10px 0px #fc2e5a; /* Glowing effect */
+    animation: pulseGlow 1s infinite alternate;
+  }
+
+  .heart::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+  }
+
+  @keyframes pulseGlow {
+    0% {
+      box-shadow: 0 0 10px 0px #fc2e5a; /* Initial glow */
+    }
+    100% {
+      box-shadow: 0 0 30px 15px #fc2e5a; /* Intense glow */
+    }
+  }
+
+  @keyframes pulseHeart {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+
+  .text {
+    color: #fc2e5a;
+    font-size: 24px;
+    margin-bottom: 20px; /* Adjusted margin-bottom */
+    margin-top: 30px; /* Adjusted margin-top */
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px; /* Added margin to separate from the new text */
+  }
+
+  .btn {
+    background-color: #fc2e5a;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 10px; /* Added margin between buttons */
+  }
+
+  .btn:hover {
+    background-color: #ff5b8f;
+  }
+
+  .whatsapp-text {
+    color: #fc2e5a;
+    font-size: 16px;
+  }
+
+  /* Media queries for mobile devices */
+  @media only screen and (max-width: 600px) {
+    .text {
+      font-size: 18px;
+    }
+    .btn {
+      font-size: 14px;
+    }
+    .heart {
+      width: 80px;
+      height: 70px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="heart-container" id="heartContainer">
+    <div class="heart" id="heart"></div>
+  </div>
+  <div class="text" id="question">Do you love me Sweetheart?</div>
+  <div class="btn-container">
+    <button class="btn" onclick="startAnimation()">Yes</button>
+    <button class="btn" onclick="replaceText()">No</button>
+  </div>
+  <div class="whatsapp-text" id="whatsappText"></div>
+
+  <script>
+    let textChanged = false;
+
+    function startAnimation() {
+      document.getElementById('heartContainer').style.display = 'block';
+      document.getElementById('heart').classList.add('heart-animation');
+      if (!textChanged) {
+        document.getElementById('question').innerText = "I love you Meri Shehzadi";
+        setTimeout(function() {
+          let whatsappText = document.getElementById('whatsappText');
+          whatsappText.innerText = "OK ";
+          let whatsappLink = document.createElement('a');
+          whatsappLink.href = "https://wa.me/";
+          whatsappLink.innerText = "Say in Chat";
+          whatsappText.appendChild(whatsappLink);
+        
+        }, 2000);
+        textChanged = true;
+      } else if (document.getElementById('question').innerText === "Why yrr?") {
+        document.getElementById('question').innerText = "I love you Jaan";
+        setTimeout(function() {
+      
+          let whatsappLink = document.createElement('a');
+          whatsappLink.href = "https://wa.me/";
+          whatsappLink.innerText = "Say in Chat";
+          whatsappText.appendChild(whatsappLink);
+          
+        }, 2000);
+      }
+    }
+
+    function replaceText() {
+      document.getElementById('question').innerText = "Why yrr?";
+      textChanged = true;
+    }
+  </script>
+</body>
+</html>
